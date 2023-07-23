@@ -7,6 +7,8 @@ router.get('/get-all',checkJwt,Appointment.getAll)
 router.get('/get/:id',checkJwt,Appointment.get)
 router.post('/create',checkJwt,Appointment.create)
 router.patch('/update/:id',checkJwt,Appointment.update)
+router.patch('/approve/:id',checkJwt,Appointment.approve)
+router.patch('/reject/:id',checkJwt,Appointment?.reject)
 router.delete('/delete/:id',checkJwt,Appointment.remove)
 
 module.exports = router;

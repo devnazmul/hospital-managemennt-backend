@@ -20,6 +20,15 @@ const appointmentSchema = new mongoose.Schema({
   schedule_date: {
     type: String,
   },
+  start_time: {
+    type: String,
+  },
+  end_time: {
+    type: String,
+  },
+},
+{
+    timestamps: true
 });
 
 

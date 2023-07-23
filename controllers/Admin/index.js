@@ -19,7 +19,7 @@ const registration = async (req, res) => {
                     await Admin.create({
                         name: req.body.name,
                         email: req.body.email,
-                        profile_pic_url: (req.body?.profilePicUrl ? req.body.profilePicUrl : 'https://engineering.unl.edu/images/staff/Kayla-Person.jpg'),
+                        profile_pic_url: (req.body?.profilePicUrl ? req.body.profilePicUrl : 'https://i.ibb.co/1TsyJh8/Screenshot-2023-07-22-114233.png'),
                         password: hash,
                         role: req.body.role
                     });
@@ -96,7 +96,7 @@ const login = async (req, res) => {
 
 const getAll = async (req, res) => {
     const { role } = req.params
-    const result = await Admin.find({ role: role }).select({ "_id": 1, "name": 1, "email": 1, "role": 1 });
+    const result = await Admin.find({ role: role }).select({ "_id": 1, "name": 1, "email": 1, "role": 1,"profile_pic_url":1 });
     if (!result) {
         res.status(404).send({
             error: true,
@@ -129,10 +129,11 @@ const getSingle = async (req, res) => {
         });
     }
 }
+
 const dashboard = async (req, res) => {
     if (req?.role === 'assistant') {
-        const doctors = await Admin.find({ role: 'doctor' }).estimatedDocumentCount()
-        const patients = await Admin.find({ role: 'patient' }).estimatedDocumentCount()
+        const doctors = await Admin.find({ role: 'doctor' })
+        const patients = await Admin.find({ role: 'patient' })
         const appointments = await Appointment.find({}).estimatedDocumentCount()
         if (!appointments && !doctors && !patients) {
             res.status(404).send({
@@ -144,8 +145,8 @@ const dashboard = async (req, res) => {
             res.status(200).send({
                 error: false,
                 data: {
-                    doctors,
-                    patients,
+                    doctors:doctors.length,
+                    patients:patients.length,
                     appointments
                 },
                 message: 'fetch dashboard data successfully.'
@@ -163,7 +164,7 @@ const dashboard = async (req, res) => {
 
 const getByJWT = async (req, res) => {
     if (req?.id) {
-        const result = await Admin.findOne({ _id: req?.id }).select({ "_id": 1, "name": 1, "email": 1, "role": 1 });
+        const result = await Admin.findOne({ _id: req?.id }).select({ "_id": 1, "name": 1, "email": 1, "role": 1,"profile_pic_url":1 });
         if (!result) {
             res.status(404).send({
                 error: true,

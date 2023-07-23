@@ -32,6 +32,7 @@ app.get('/', (req, res) => {
 app.use('/api/v1/auth', routes.Admin);
 app.use('/api/v1/schedule', routes.Schedule);
 app.use('/api/v1/appointment', routes.Appointment);
+app.use('/api/v1/notification', routes.Notification);
 
 
 
