@@ -24,7 +24,7 @@ const create = async (req, res) => {
   } else {
     res.status(401).send({
       error: true,
-      data: result,
+      data: {},
       message: "no permission to perform this tusk",
     });
   }
@@ -57,6 +57,7 @@ const getAll = async (req, res) => {
 
 const get = async (req, res) => {
   const { doctor_id } = req.params;
+  console.log({ doctor_id });
   const result = await Schedule.findOne({ doctor_id: doctor_id });
   if (!result) {
     res.status(200).send({
@@ -126,7 +127,7 @@ const remove = async (req, res) => {
   } else {
     res.status(401).send({
       error: true,
-      data: result,
+      data: {},
       message: "no permission to perform this tusk",
     });
   }

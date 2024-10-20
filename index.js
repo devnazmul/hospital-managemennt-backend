@@ -8,7 +8,8 @@ require("./config/db");
 const routes = require("./routes");
 const dev = require("./config/config");
 const morgan = require("morgan");
-
+const cron = require("node-cron");
+const Schedule = require("./models/Schedule");
 const port = dev.app.port;
 
 // MIDDLEWARE ===========================================================
@@ -29,6 +30,18 @@ app.use("/api/v1/auth", routes.Admin);
 app.use("/api/v1/schedule", routes.Schedule);
 app.use("/api/v1/appointment", routes.Appointment);
 app.use("/api/v1/notification", routes.Notification);
+
+// CORN JOBS ===========================================================
+// cron.schedule("0 0 * * *", async () => {
+//   try {
+//     const now = new Date();
+//     const result = await Schedule.deleteMany({ appointmentDate: { $lt: now } });
+
+//     console.log(`${result.deletedCount} outdated appointments deleted.`);
+//   } catch (error) {
+//     console.error("Error deleting outdated appointments:", error);
+//   }
+// });
 
 // ERROR HANDELER MIDDLEWARE ===========================================
 const errorHandler = (err, req, res, next) => {

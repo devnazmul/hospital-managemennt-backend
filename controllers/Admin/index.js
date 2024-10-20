@@ -93,7 +93,8 @@ const login = async (req, res) => {
         message: "Authentication Error.",
       });
     }
-  } catch {
+  } catch (error) {
+    console.log(error);
     res.status(401).send({
       error: true,
       data: [],
@@ -291,7 +292,7 @@ const update = async (req, res) => {
     } else {
       res.status(401).send({
         error: true,
-        data: result,
+        data: {},
         message: "no permission to perform this tusk",
       });
     }
@@ -300,6 +301,7 @@ const update = async (req, res) => {
 
 const remove = async (req, res) => {
   const { id } = req.params;
+  console.log({ id });
   const isExist = await Admin.findOne({ _id: id });
   if (!isExist) {
     res.status(404).send({
@@ -323,7 +325,7 @@ const remove = async (req, res) => {
     } else {
       res.status(401).send({
         error: true,
-        data: result,
+        data: {},
         message: "no permission to perform this tusk",
       });
     }
